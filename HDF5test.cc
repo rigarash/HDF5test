@@ -21,12 +21,31 @@
 * DEALINGS IN THE SOFTWARE.
 *
 *****************************************************************************/
+#include <alps/alea/observable.h>
 #include <alps/alea/observableset.h>
+
 #include <boost/timer/timer.hpp>
+#include <boost/random.hpp>
+
+#include <iostream>
+
+static long const N = 1<<23;
 
 int main(int argc, char** argv) {
     boost::timer::auto_cpu_timer t;
+
     alps::ObservableSet obs;
+    obs << alps::RealObservable("a");
     obs.reset(true);
+
+    boost::mt19937 eng(0);
+    boost::variate_generator<boost::mt19937&, boost::uniform_real<> >
+        random_01(eng, boost::uniform_real<>());
+
+    for (long i = 0; i < N; ++i) {
+        obs["a"] << random_01();
+    }
+
+    std::cout << obs;
     return 0;
 }
