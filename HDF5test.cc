@@ -21,7 +21,12 @@
 * DEALINGS IN THE SOFTWARE.
 *
 *****************************************************************************/
+#include <alps/alea/observableset.h>
+#include <boost/timer/timer.hpp>
 
 int main(int argc, char** argv) {
+    boost::timer::auto_cpu_timer t;
+    alps::ObservableSet obs;
+    obs.reset(true);
     return 0;
 }
