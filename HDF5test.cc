@@ -45,11 +45,20 @@ int main(int argc, char** argv) {
         random_01(eng, boost::uniform_real<>());
     t.stop();
 
-    std::cout << "Observable storing:";
+    // std::cout << "Observable storing:";
+    // t.start();
+    // for (long i = 0; i < N; ++i) {
+    //     obs["a"] << random_01();
+    // }
+    // t.stop();
+    // std::cout << t.format(6);
+
+    // Assuming that the source directory is "../HDF5test/"
+    boost::filesystem::path dump("../HDF5test/test.xdr");
+    alps::IXDRFileDump idp(dump);
+    std::cout << "XDR load:          ";
     t.start();
-    for (long i = 0; i < N; ++i) {
-        obs["a"] << random_01();
-    }
+    obs.load(idp);
     t.stop();
     std::cout << t.format(6);
 
@@ -60,6 +69,7 @@ int main(int argc, char** argv) {
     obs.save(odp);
     t.stop();
     std::cout << t.format(6);
+    boost::filesystem::remove(xdr);
 
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
@@ -68,6 +78,8 @@ int main(int argc, char** argv) {
     h5["/a"] << obs;
     t.stop();
     std::cout << t.format(6);
+    boost::filesystem::remove(hdf5);
+
 
     return 0;
 }
