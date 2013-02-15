@@ -26,7 +26,6 @@
 #include <alps/osiris.h>
 
 #include <boost/timer/timer.hpp>
-#include <boost/random.hpp>
 #include <boost/filesystem.hpp>
 
 #include <iostream>
@@ -39,19 +38,6 @@ int main(int argc, char** argv) {
     alps::ObservableSet obs;
     obs << alps::RealObservable("a");
     obs.reset(true);
-
-    boost::mt19937 eng(0);
-    boost::variate_generator<boost::mt19937&, boost::uniform_real<> >
-        random_01(eng, boost::uniform_real<>());
-    t.stop();
-
-    // std::cout << "Observable storing:";
-    // t.start();
-    // for (long i = 0; i < N; ++i) {
-    //     obs["a"] << random_01();
-    // }
-    // t.stop();
-    // std::cout << t.format(6);
 
     // Assuming that the source directory is "../HDF5test/"
     boost::filesystem::path dump("../HDF5test/test.xdr");

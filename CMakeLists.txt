@@ -20,6 +20,10 @@ include(${ALPS_USE_FILE})
 # enable C and C++ compilers
 enable_language(CXX)
 
+# HDF5create
+add_executable(HDF5create HDF5create.cc)
+target_link_libraries(HDF5create ${ALPS_LIBRARIES})
+
 # HDF5test
 add_executable(HDF5test HDF5test.cc)
 target_link_libraries(HDF5test ${ALPS_LIBRARIES})
