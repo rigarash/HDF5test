@@ -27,10 +27,12 @@
 
 #include <boost/timer/timer.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <iostream>
+#include <cstddef>
 
-static long const N = 1<<27;
+static std::size_t const N = 1000;
 
 int main(int argc, char** argv) {
     boost::timer::cpu_timer t;
@@ -43,7 +45,7 @@ int main(int argc, char** argv) {
     boost::filesystem::path dump("../HDF5test/test.xdr");
     alps::IXDRFileDump idp(dump);
     t.start();
-    obs.load(idp);
+        obs.load(idp);
     t.stop();
     std::cout << obs;
     std::cout << "XDR load:          " << t.format(6);
@@ -51,7 +53,9 @@ int main(int argc, char** argv) {
     boost::filesystem::path xdr(boost::filesystem::unique_path());
     alps::OXDRFileDump odp(xdr);
     t.start();
-    obs.save(odp);
+    for (std::size_t i = 0; i < N; ++i) {
+        obs.save(odp);
+    }
     t.stop();
     std::cout << "XDR save:          " << t.format(6);
     boost::filesystem::remove(xdr);
@@ -60,7 +64,9 @@ int main(int argc, char** argv) {
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
-    h5["/a"] << obs;
+    for (std::size_t i = 0; i < N; ++i) {
+        h5["/a/" + boost::lexical_cast<std::string>(i)] << obs;
+    }
     t.stop();
     std::cout << "HDF5 save:a        " << t.format(6);
     boost::filesystem::remove(hdf5);
@@ -70,7 +76,9 @@ int main(int argc, char** argv) {
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
-    h5["/a/a"] << obs;
+    for (std::size_t i = 0; i < N; ++i) {
+        h5["/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+    }
     t.stop();
     std::cout << "HDF5 save:a/a      " << t.format(6);
     boost::filesystem::remove(hdf5);
@@ -80,7 +88,9 @@ int main(int argc, char** argv) {
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
-    h5["/a/a/a"] << obs;
+    for (std::size_t i = 0; i < N; ++i) {
+        h5["/a/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+    }
     t.stop();
     std::cout << "HDF5 save:a/a/a    " << t.format(6);
     boost::filesystem::remove(hdf5);
@@ -90,7 +100,9 @@ int main(int argc, char** argv) {
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
-    h5["/a/a/a/a"] << obs;
+    for (std::size_t i = 0; i < N; ++i) {
+        h5["/a/a/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+    }
     t.stop();
     std::cout << "HDF5 save:a/a/a/a  " << t.format(6);
     boost::filesystem::remove(hdf5);
@@ -100,7 +112,9 @@ int main(int argc, char** argv) {
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
-    h5["/a/a/a/a/"] << obs;
+    for (std::size_t i = 0; i < N; ++i) {
+        h5["/a/a/a/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+    }
     t.stop();
     std::cout << "HDF5 save:a/a/a/a/a" << t.format(6);
     boost::filesystem::remove(hdf5);
