@@ -65,6 +65,7 @@ int main(int argc, char** argv) {
     }
     t.stop();
     std::cout << "XDR save:          " << t.format(6) << std::flush;
+    std::cout << "XDR size:  " << boost::filesystem::file_size(xdr) << std::endl;
     boost::filesystem::remove(xdr);
 
     {
@@ -76,6 +77,7 @@ int main(int argc, char** argv) {
     }
     t.stop();
     std::cout << "HDF5 save:a        " << t.format(6) << std::flush;
+    std::cout << "HDF5 size: " << boost::filesystem::file_size(hdf5) << std::endl;
     boost::filesystem::remove(hdf5);
     }
 
@@ -88,6 +90,7 @@ int main(int argc, char** argv) {
     }
     t.stop();
     std::cout << "HDF5 save:a/a      " << t.format(6) << std::flush;
+    std::cout << "HDF5 size: " << boost::filesystem::file_size(hdf5) << std::endl;
     boost::filesystem::remove(hdf5);
     }
 
@@ -100,6 +103,7 @@ int main(int argc, char** argv) {
     }
     t.stop();
     std::cout << "HDF5 save:a/a/a    " << t.format(6) << std::flush;
+    std::cout << "HDF5 size: " << boost::filesystem::file_size(hdf5) << std::endl;
     boost::filesystem::remove(hdf5);
     }
 
@@ -112,6 +116,7 @@ int main(int argc, char** argv) {
     }
     t.stop();
     std::cout << "HDF5 save:a/a/a/a  " << t.format(6) << std::flush;
+    std::cout << "HDF5 size: " << boost::filesystem::file_size(hdf5) << std::endl;
     boost::filesystem::remove(hdf5);
     }
 
@@ -124,6 +129,7 @@ int main(int argc, char** argv) {
     }
     t.stop();
     std::cout << "HDF5 save:a/a/a/a/a" << t.format(6) << std::flush;
+    std::cout << "HDF5 size: " << boost::filesystem::file_size(hdf5) << std::endl;
     boost::filesystem::remove(hdf5);
     }
     return 0;
