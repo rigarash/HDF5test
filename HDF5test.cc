@@ -23,16 +23,18 @@
 *****************************************************************************/
 #include <alps/alea/observable.h>
 #include <alps/alea/observableset.h>
+#include <alps/osiris.h>
 
 #include <boost/timer/timer.hpp>
 #include <boost/random.hpp>
+#include <boost/filesystem.hpp>
 
 #include <iostream>
 
 static long const N = 1<<23;
 
 int main(int argc, char** argv) {
-    boost::timer::auto_cpu_timer t;
+    boost::timer::cpu_timer t;
 
     alps::ObservableSet obs;
     obs << alps::RealObservable("a");
@@ -41,11 +43,31 @@ int main(int argc, char** argv) {
     boost::mt19937 eng(0);
     boost::variate_generator<boost::mt19937&, boost::uniform_real<> >
         random_01(eng, boost::uniform_real<>());
+    t.stop();
 
+    std::cout << "Observable storing:";
+    t.start();
     for (long i = 0; i < N; ++i) {
         obs["a"] << random_01();
     }
+    t.stop();
+    std::cout << t.format(6);
 
-    std::cout << obs;
+    boost::filesystem::path xdr(boost::filesystem::unique_path());
+    alps::OXDRFileDump odp(xdr);
+    std::cout << "XDR save:          ";
+    t.start();
+    obs.save(odp);
+    t.stop();
+    std::cout << t.format(6);
+
+    boost::filesystem::path hdf5(boost::filesystem::unique_path());
+    alps::hdf5::archive h5(hdf5.string(), "a");
+    std::cout << "HDF5 save:         ";
+    t.start();
+    h5["/a"] << obs;
+    t.stop();
+    std::cout << t.format(6);
+
     return 0;
 }
