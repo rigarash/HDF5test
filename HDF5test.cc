@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
         obs.load(idp);
     t.stop();
     std::cout << obs;
-    std::cout << "XDR load:          " << t.format(6);
+    std::cout << "XDR load:          " << t.format(6) << std::flush;
 
     // prepare string of i
     std::vector<std::string> iv(N);
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
         obs.save(odp);
     }
     t.stop();
-    std::cout << "XDR save:          " << t.format(6);
+    std::cout << "XDR save:          " << t.format(6) << std::flush;
     boost::filesystem::remove(xdr);
 
     {
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
         h5["/a/" + iv[i]] << obs;
     }
     t.stop();
-    std::cout << "HDF5 save:a        " << t.format(6);
+    std::cout << "HDF5 save:a        " << t.format(6) << std::flush;
     boost::filesystem::remove(hdf5);
     }
 
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
         h5["/a/a/" + iv[i]] << obs;
     }
     t.stop();
-    std::cout << "HDF5 save:a/a      " << t.format(6);
+    std::cout << "HDF5 save:a/a      " << t.format(6) << std::flush;
     boost::filesystem::remove(hdf5);
     }
 
@@ -99,7 +99,7 @@ int main(int argc, char** argv) {
         h5["/a/a/a/" + iv[i]] << obs;
     }
     t.stop();
-    std::cout << "HDF5 save:a/a/a    " << t.format(6);
+    std::cout << "HDF5 save:a/a/a    " << t.format(6) << std::flush;
     boost::filesystem::remove(hdf5);
     }
 
@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
         h5["/a/a/a/a/" + iv[i]] << obs;
     }
     t.stop();
-    std::cout << "HDF5 save:a/a/a/a  " << t.format(6);
+    std::cout << "HDF5 save:a/a/a/a  " << t.format(6) << std::flush;
     boost::filesystem::remove(hdf5);
     }
 
@@ -123,7 +123,7 @@ int main(int argc, char** argv) {
         h5["/a/a/a/a/a/" + iv[i]] << obs;
     }
     t.stop();
-    std::cout << "HDF5 save:a/a/a/a/a" << t.format(6);
+    std::cout << "HDF5 save:a/a/a/a/a" << t.format(6) << std::flush;
     boost::filesystem::remove(hdf5);
     }
     return 0;
