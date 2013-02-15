@@ -56,10 +56,11 @@ int main(int argc, char** argv) {
     // Assuming that the source directory is "../HDF5test/"
     boost::filesystem::path dump("../HDF5test/test.xdr");
     alps::IXDRFileDump idp(dump);
-    std::cout << "XDR load:          ";
     t.start();
     obs.load(idp);
     t.stop();
+    std::cout << obs;
+    std::cout << "XDR load:          ";
     std::cout << t.format(6);
 
     boost::filesystem::path xdr(boost::filesystem::unique_path());
