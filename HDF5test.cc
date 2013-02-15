@@ -60,27 +60,64 @@ int main(int argc, char** argv) {
     obs.load(idp);
     t.stop();
     std::cout << obs;
-    std::cout << "XDR load:          ";
-    std::cout << t.format(6);
+    std::cout << "XDR load:          " << t.format(6);
 
     boost::filesystem::path xdr(boost::filesystem::unique_path());
     alps::OXDRFileDump odp(xdr);
-    std::cout << "XDR save:          ";
     t.start();
     obs.save(odp);
     t.stop();
-    std::cout << t.format(6);
+    std::cout << "XDR save:          " << t.format(6);
     boost::filesystem::remove(xdr);
 
+    {
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
-    std::cout << "HDF5 save:         ";
     t.start();
     h5["/a"] << obs;
     t.stop();
-    std::cout << t.format(6);
+    std::cout << "HDF5 save:a        " << t.format(6);
     boost::filesystem::remove(hdf5);
+    }
 
+    {
+    boost::filesystem::path hdf5(boost::filesystem::unique_path());
+    alps::hdf5::archive h5(hdf5.string(), "a");
+    t.start();
+    h5["/a/a"] << obs;
+    t.stop();
+    std::cout << "HDF5 save:a/a      " << t.format(6);
+    boost::filesystem::remove(hdf5);
+    }
 
+    {
+    boost::filesystem::path hdf5(boost::filesystem::unique_path());
+    alps::hdf5::archive h5(hdf5.string(), "a");
+    t.start();
+    h5["/a/a/a"] << obs;
+    t.stop();
+    std::cout << "HDF5 save:a/a/a    " << t.format(6);
+    boost::filesystem::remove(hdf5);
+    }
+
+    {
+    boost::filesystem::path hdf5(boost::filesystem::unique_path());
+    alps::hdf5::archive h5(hdf5.string(), "a");
+    t.start();
+    h5["/a/a/a/a"] << obs;
+    t.stop();
+    std::cout << "HDF5 save:a/a/a/a  " << t.format(6);
+    boost::filesystem::remove(hdf5);
+    }
+
+    {
+    boost::filesystem::path hdf5(boost::filesystem::unique_path());
+    alps::hdf5::archive h5(hdf5.string(), "a");
+    t.start();
+    h5["/a/a/a/a/"] << obs;
+    t.stop();
+    std::cout << "HDF5 save:a/a/a/a/a" << t.format(6);
+    boost::filesystem::remove(hdf5);
+    }
     return 0;
 }
