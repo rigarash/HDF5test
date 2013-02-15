@@ -33,7 +33,7 @@
 #include <cstddef>
 #include <vector>
 
-static std::size_t const N = 1000;
+static std::size_t const N = 20000;
 
 int main(int argc, char** argv) {
     boost::timer::cpu_timer t;
