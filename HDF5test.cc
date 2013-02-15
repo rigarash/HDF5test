@@ -31,6 +31,7 @@
 
 #include <iostream>
 #include <cstddef>
+#include <vector>
 
 static std::size_t const N = 1000;
 
@@ -50,6 +51,12 @@ int main(int argc, char** argv) {
     std::cout << obs;
     std::cout << "XDR load:          " << t.format(6);
 
+    // prepare string of i
+    std::vector<std::string> iv(N);
+    for (std::size_t i = 0; i < N; ++i) {
+        iv[i] = boost::lexical_cast<std::string>(i);
+    }
+
     boost::filesystem::path xdr(boost::filesystem::unique_path());
     alps::OXDRFileDump odp(xdr);
     t.start();
@@ -65,7 +72,7 @@ int main(int argc, char** argv) {
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
     for (std::size_t i = 0; i < N; ++i) {
-        h5["/a/" + boost::lexical_cast<std::string>(i)] << obs;
+        h5["/a/" + iv[i]] << obs;
     }
     t.stop();
     std::cout << "HDF5 save:a        " << t.format(6);
@@ -77,7 +84,7 @@ int main(int argc, char** argv) {
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
     for (std::size_t i = 0; i < N; ++i) {
-        h5["/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+        h5["/a/a/" + iv[i]] << obs;
     }
     t.stop();
     std::cout << "HDF5 save:a/a      " << t.format(6);
@@ -89,7 +96,7 @@ int main(int argc, char** argv) {
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
     for (std::size_t i = 0; i < N; ++i) {
-        h5["/a/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+        h5["/a/a/a/" + iv[i]] << obs;
     }
     t.stop();
     std::cout << "HDF5 save:a/a/a    " << t.format(6);
@@ -101,7 +108,7 @@ int main(int argc, char** argv) {
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
     for (std::size_t i = 0; i < N; ++i) {
-        h5["/a/a/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+        h5["/a/a/a/a/" + iv[i]] << obs;
     }
     t.stop();
     std::cout << "HDF5 save:a/a/a/a  " << t.format(6);
@@ -113,7 +120,7 @@ int main(int argc, char** argv) {
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
     for (std::size_t i = 0; i < N; ++i) {
-        h5["/a/a/a/a/a/" + boost::lexical_cast<std::string>(i)] << obs;
+        h5["/a/a/a/a/a/" + iv[i]] << obs;
     }
     t.stop();
     std::cout << "HDF5 save:a/a/a/a/a" << t.format(6);
