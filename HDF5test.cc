@@ -31,7 +31,7 @@
 
 #include <iostream>
 
-static long const N = 1<<23;
+static long const N = 1<<27;
 
 int main(int argc, char** argv) {
     boost::timer::cpu_timer t;
