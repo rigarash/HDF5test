@@ -52,8 +52,8 @@ int main(int argc, char** argv) {
     t.stop();
     std::cout << "Observable storing:" << t.format(6);
 
-    // Assuming that the source directory is "../HDF5test/"
-    boost::filesystem::path xdr("../HDF5test/test.xdr");
+    // Assuming that the pre-stored variable is inside source directory.
+    boost::filesystem::path xdr("test.xdr");
     alps::OXDRFileDump odp(xdr);
     t.start();
     obs.save(odp);
