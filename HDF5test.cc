@@ -51,14 +51,27 @@ void vector_test() {
         val = dst(rng);
     }
 
+    std::vector<double> vec0(SIZE);
+
+    {
+    boost::filesystem::path xdr(boost::filesystem::unique_path());
+    alps::OXDRFileDump odp(xdr);
+    t.start();
+    odp << vec0;
+    t.stop();
+    std::cout << "XDR vector save:0   " << t.format(6) << std::flush;
+    std::cout << "XDR vector size:0   " << boost::filesystem::file_size(xdr) << std::endl;
+    boost::filesystem::remove(xdr);
+    }
+
     {
     boost::filesystem::path xdr(boost::filesystem::unique_path());
     alps::OXDRFileDump odp(xdr);
     t.start();
     odp << vec;
     t.stop();
-    std::cout << "XDR vector save:    " << t.format(6) << std::flush;
-    std::cout << "XDR vector size:    " << boost::filesystem::file_size(xdr) << std::endl;
+    std::cout << "XDR vector save:rand" << t.format(6) << std::flush;
+    std::cout << "XDR vector size:rand" << boost::filesystem::file_size(xdr) << std::endl;
     boost::filesystem::remove(xdr);
     }
 
@@ -66,10 +79,20 @@ void vector_test() {
     boost::filesystem::path hdf5(boost::filesystem::unique_path());
     alps::hdf5::archive h5(hdf5.string(), "a");
     t.start();
-    h5["a"] << vec;
+    h5["/a"] << vec0;
     t.stop();
-    std::cout << "HDF5 vector save:a  " << t.format(6) << std::flush;
-    std::cout << "HDF5 vector size:   " << boost::filesystem::file_size(hdf5) << std::endl;
+    std::cout << "HDF5 vector save:0  " << t.format(6) << std::flush;
+    std::cout << "HDF5 vector size:0  " << boost::filesystem::file_size(hdf5) << std::endl;
+    boost::filesystem::remove(hdf5);
+    }
+    {
+    boost::filesystem::path hdf5(boost::filesystem::unique_path());
+    alps::hdf5::archive h5(hdf5.string(), "a");
+    t.start();
+    h5["/a"] << vec;
+    t.stop();
+    std::cout << "HDF5 vector save:ran" << t.format(6) << std::flush;
+    std::cout << "HDF5 vector size:ran" << boost::filesystem::file_size(hdf5) << std::endl;
     boost::filesystem::remove(hdf5);
     }
 }
@@ -81,8 +104,8 @@ int main(int argc, char** argv) {
     obs << alps::RealObservable("a");
     obs.reset(true);
 
-    // Assuming that the source directory is "../HDF5test/"
-    boost::filesystem::path dump("../HDF5test/test.xdr");
+    // Assuming that the dump is located in current directory.
+    boost::filesystem::path dump("test.xdr");
     alps::IXDRFileDump idp(dump);
     t.start();
         obs.load(idp);
