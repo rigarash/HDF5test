@@ -27,3 +27,7 @@ target_link_libraries(HDF5create ${ALPS_LIBRARIES})
 # HDF5test
 add_executable(HDF5test HDF5test.cc)
 target_link_libraries(HDF5test ${ALPS_LIBRARIES})
+
+# HDF5detailedtest
+add_executable(HDF5detailedtest HDF5detailedtest.cc)
+target_link_libraries(HDF5detailedtest ${ALPS_LIBRARIES})
