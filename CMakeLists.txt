@@ -5,7 +5,7 @@
 # The minimum version is stricter than ALPS itself,
 # in order to load the correct FindBoost.cmake when testing.
 cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
-project(diag-parapack NONE)
+project(HDF5test NONE)
 
 ######################################################################
 # find ALPS Library
